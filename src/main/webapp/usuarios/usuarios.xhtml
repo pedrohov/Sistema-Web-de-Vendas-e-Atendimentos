@@ -1,0 +1,92 @@
+<ui:composition template="/WEB-INF/templates/layout.xhtml" 
+   xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:h="http://xmlns.jcp.org/jsf/html"
+   xmlns:f="http://xmlns.jcp.org/jsf/core"
+   xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+   xmlns:p="http://primefaces.org/ui">
+ 
+ 	<ui:define name="title">
+	    <title>Usuários</title>
+	</ui:define>
+ 
+    <ui:define name="content">
+    
+		<h2>Usuários</h2>
+		<h:form id="frm">
+		<div class="form-group">
+			<div class="row">
+				<div class="container crud-menu">
+					<p:commandButton value="Cadastrar Usuário" icon="ui-icon-plus" action="#{usuario.novo}"/>
+				</div>
+			</div>
+		</div>
+		
+		<div class="table-responsive">
+		
+			<!-- Atualizar bean -->
+			<f:metadata>
+				<f:viewParam name="dummy" />
+				<f:event listener="#{usuario.preRender}" type="preRenderView" />
+			</f:metadata>
+		
+			<p:messages/>
+			<p:dataTable value="#{usuario.usuarios}"
+						 var="obj"
+						 selectionMode="single"
+						 selection="#{usuario.obj}"
+						 rowKey="#{obj.codigo}"
+						 sortBy="#{obj.codigo}"
+						 
+						 id="tbUsuarios"
+						 emptyMessage="Não existem registros cadastrados.">
+				
+				<p:column headerText="Código" width="7%" style="text-align: center !important;">
+					<h:outputText value="#{obj.codigo}" />
+				</p:column>
+				
+				<p:column headerText="Nome">
+					<h:outputText value="#{obj.nome}" />
+				</p:column>
+				
+				<p:column headerText="Email">
+					<h:outputText value="#{obj.email}" />
+				</p:column>
+				
+				<p:column headerText="Login" width="20%">
+					<h:outputText value="#{obj.login}" />
+				</p:column>
+				
+				<p:column headerText="Dt. Nascimento"  width="20%">
+					<h:outputText value="#{obj.dataNascimento}" />
+				</p:column>
+				
+				<f:facet name="footer">
+	                <p:commandButton icon="ui-icon-pencil"
+                                 	 value="Editar"
+                                 	 action="#{usuario.editar}"
+                                 	 update="frm" process="frm" />
+					<p:commandButton icon="ui-icon-trash"
+									 process="tbUsuarios"
+                                     value="Excluir"
+                                     update="frm"
+                                     oncomplete="PF('confirmacao').show(); return false;"/>
+				</f:facet>
+				
+			</p:dataTable>
+			
+			<p:confirmDialog header="Exclusão de item"
+				message="Tem certeza que deseja excluir esse registro?"
+				widgetVar="confirmacao">
+				<h:outputText value="#{obj.nome}" />
+				<p:commandButton value="Sim" action="#{usuario.excluir}"
+					update="frm" process="@this"
+					oncomplete="PF('confirmacao').hide()" />
+				<p:button value="Não"
+					onclick="PF('confirmacao').hide(); return false;" />
+			</p:confirmDialog>
+			
+			
+  		</div>
+	</h:form>
+	</ui:define>
+</ui:composition>

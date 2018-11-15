@@ -1,0 +1,132 @@
+<ui:composition template="/WEB-INF/templates/layout.xhtml" 
+   xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:h="http://xmlns.jcp.org/jsf/html"
+   xmlns:f="http://xmlns.jcp.org/jsf/core"
+   xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+   xmlns:p="http://primefaces.org/ui">
+ 
+ 	<ui:define name="title">
+	    <title>Vendas</title>
+	</ui:define>
+ 
+    <ui:define name="content">
+    
+		<h2>Vendas</h2>
+		<h:form id="frm">
+		<div class="form-group">
+			<div class="row">
+				<div class="container crud-menu">
+					<p:commandButton value="Cadastrar Venda" icon="ui-icon-plus" action="#{venda.novo}"/>
+				</div>
+			</div>
+		</div>
+		
+		<div class="table-responsive">
+			<!-- Atualizar bean -->
+			<f:metadata>
+				<f:viewParam name="dummy" />
+				<f:event listener="#{venda.preRender}" type="preRenderView" />
+			</f:metadata>
+		
+			<p:messages/>
+			<p:dataTable value="#{venda.vendasList}"
+						 var="obj"
+						 selectionMode="single"
+						 selection="#{venda.obj}"
+						 rowKey="#{obj.codigo}"
+						 sortBy="#{obj.codigo}"
+						 
+						 id="tbvendas"
+						 emptyMessage="Não existem registros cadastrados.">
+				
+				<p:column headerText="Código" width="7%" style="text-align: center !important;">
+					<h:outputText value="#{obj.codigo}" />
+				</p:column>
+				
+				<p:column headerText="Cliente">
+					<h:outputText value="#{obj.cliente.nome}" />
+				</p:column>
+				
+				<p:column headerText="Atendente">
+					<h:outputText value="#{obj.vendedor.nome}" />
+				</p:column>
+				
+				<p:column headerText="Total">
+					<h:outputText value="R$ #{obj.total}" />
+				</p:column>
+				
+				<p:column headerText="Data"  width="20%">
+					<h:outputText value="#{obj.data}" />
+				</p:column>
+				
+				<p:column headerText="Opções" style="text-align: center;" width="20%">
+					<p:commandLink update="frm" oncomplete="PF('detalhes').show(); return false;">
+		                <f:setPropertyActionListener value="#{obj}" target="#{venda.obj}" />
+		                <i class="fa fa-fw fa-list" aria-hidden="true"></i>
+		            </p:commandLink><br/>
+				</p:column>
+				
+				<f:facet name="footer">
+	                <p:commandButton icon="ui-icon-pencil"
+                                 	 value="Editar"
+                                 	 action="#{venda.editar}"
+                                 	 update="frm" process="frm" />
+					<p:commandButton icon="ui-icon-trash"
+									 process="tbvendas"
+                                     value="Excluir"
+                                     update="frm"
+                                     oncomplete="PF('confirmacao').show(); return false;"/>
+				</f:facet>
+				
+			</p:dataTable>
+			
+			<p:confirmDialog header="Exclusão de item"
+				message="Tem certeza que deseja excluir esse registro?"
+				widgetVar="confirmacao">
+				<h:outputText value="#{obj.nome}" />
+				<p:commandButton value="Sim" action="#{venda.excluir}"
+					update="frm" process="@this"
+					oncomplete="PF('confirmacao').hide()" />
+				<p:button value="Não"
+					onclick="PF('confirmacao').hide(); return false;" />
+			</p:confirmDialog>
+			
+			<p:dialog header="Exibir Detalhes" widgetVar="detalhes" modal="true"
+				  showEffect="blind" hideEffect="blind"  closeOnEscape="true"
+				  cellpadding="5">
+	            <p:panelGrid columns="2" layout="grid">
+	            	<p:outputLabel value="Cliente:" for="txtCliNome" />
+	            	<h:outputText value="#{venda.obj.cliente.nome}" id="txtCliNome" />
+	            	<p:outputLabel value="Atendente:" for="txtAtNome" />
+	            	<h:outputText value="#{venda.obj.vendedor.nome}" id="txtAtNome" />
+	            	<p:outputLabel value="Total" for="txtVTotal" />
+	            	<h:outputText value="R$ #{venda.obj.total}" id="txtVTotal" />
+	            	<p:outputLabel value="Itens vendidos:" for="tbShowVProdutos" />
+      				<p:outputLabel value=" " />
+	        	</p:panelGrid>
+	        	<p:dataTable value="#{venda.obj.itens}"
+		 		 var="obj" style="width: 360px;"
+		 		 id="tbShowVProdutos"
+		 		 emptyMessage="Nenhum produto vendido.">
+
+					<p:column headerText="Produto" width="10%">
+						<h:outputText value="#{obj.produto.nome}" />
+					</p:column>
+					
+					<p:column headerText="Preço" width="10%">
+						<h:outputText value="R$ #{obj.produto.preco}" />
+					</p:column>
+					
+					<p:column headerText="Quantidade" width="10%">
+						<h:outputText value="#{obj.quantidade}" />
+					</p:column>
+					
+					<p:column headerText="Total" width="10%">
+						<h:outputText value="R$ #{obj.total}" />
+					</p:column>
+				</p:dataTable>
+		</p:dialog>
+  	</div>
+	</h:form>
+	</ui:define>
+</ui:composition>

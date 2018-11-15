@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:h="http://xmlns.jcp.org/jsf/html"
+xmlns:f="http://xmlns.jcp.org/jsf/core"
+xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<ui:insert name="title" />
+	<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" />
+	<h:outputStylesheet library="css" name="bootstrap.min.css" />
+	<h:outputStylesheet library="css" name="style.css" />
+</h:head>
+
+
+<h:body>
+	<nav class="navbar navbar-light fixed-top flex-md-nowrap p-0">
+		<h:link outcome="/public/dashboard" styleClass="navbar-brand col-sm-3 col-md-2 mr-0">
+			Dashboard
+		</h:link>
+		<div class="col-sm-3 col-md-4 mr-0 d-flex flex-column flex-md-row">
+			<h:link outcome="/vendas/nova_venda" styleClass="nav-link nav-middle">
+				<i class="fa fa-fw fa-credit-card" aria-hidden="true"></i><br />Nova Venda</h:link>
+			<h:link outcome="/atendimentos/novo_atendimento" styleClass="nav-link nav-middle">
+				<i class="fa fa-fw fa-calendar" aria-hidden="true"></i><br />Novo Atendimento</h:link>
+			<h:link outcome="/produtos/entrada_produtos" styleClass="nav-link nav-middle">
+			 	<i class="fa fa-fw fa-inbox"></i><br />Entrada de Produtos</h:link>
+		</div>
+		<ul class="navbar-nav px-5 align-items-center">
+			<li class="nav-item text-nowrap">
+				Nome do atendente<a class="nav-link" href="#">Sign out</a>
+			</li>
+      </ul>
+    </nav>
+    
+	<div class="container-fluid">
+		<div class="row">
+			<nav class="col-md-2 d-none d-md-block sidebar">
+				<div class="sidebar-sticky">
+					<ul class="nav flex-column">
+						<li class="#{view.viewId eq '/public/dashboard.xhtml' ? 'nav-item active' : 'nav-item'}">
+							<h:link outcome="/public/dashboard" styleClass="nav-link">
+								<i class="fa fa-fw fa-home" aria-hidden="true"></i> Dashboard</h:link>
+	         			</li>
+	         			<li class="#{view.viewId eq '/vendas/vendas.xhtml' ? 'nav-item active' : 'nav-item'}">
+	         				<h:link outcome="/vendas/vendas" styleClass="nav-link">
+								<i class="fa fa-fw fa-shopping-cart" aria-hidden="true"></i> Vendas</h:link>
+	         			</li>
+	         			<li class="#{view.viewId eq '/atendimentos/atendimentos.xhtml' ? 'nav-item active' : 'nav-item'}">
+	         				<h:link outcome="/atendimentos/atendimentos" styleClass="nav-link">
+								<i class="fa fa-fw fa-calendar" aria-hidden="true"></i> Atendimentos</h:link>
+	         			</li>
+	         			<li class="#{view.viewId eq '/produtos/produtos.xhtml' ? 'nav-item active' : 'nav-item'}">
+	         				<h:link outcome="/produtos/produtos" styleClass="nav-link">
+								<i class="fa fa-fw fa-cube" aria-hidden="true"></i> Produtos</h:link>
+	         			</li>
+	         			<li class="#{view.viewId eq '/marcas/marcas.xhtml' ? 'nav-item active' : 'nav-item'}">
+	         				<h:link outcome="/marcas/marcas" styleClass="nav-link">
+								<i class="fa fa-fw fa-ticket" aria-hidden="true"></i> Marcas</h:link>
+	         			</li>
+						<li class="#{view.viewId eq '/clientes/clientes.xhtml' ? 'nav-item active' : 'nav-item'}">
+							<h:link outcome="/clientes/clientes" styleClass="nav-link">
+								<i class="fa fa-fw fa-users" aria-hidden="true"></i> Clientes</h:link>
+	         			</li>
+	         			<li class="#{view.viewId eq '/usuarios/usuarios.xhtml' ? 'nav-item active' : 'nav-item'}">
+							<h:link outcome="/usuarios/usuarios" styleClass="nav-link">
+								<i class="fa fa-fw fa-user" aria-hidden="true"></i> Usuários</h:link>
+	         			</li>
+						<li class="#{view.viewId eq '/servicos/servicos.xhtml' ? 'nav-item active' : 'nav-item'}">
+							<h:link outcome="/servicos/servicos" styleClass="nav-link">
+								<i class="fa fa-fw fa-file-text" aria-hidden="true"></i> Serviços</h:link>
+	         			</li>
+	       			</ul>
+	     		</div>
+	   		</nav>
+		</div>
+	</div>
+	
+	<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+		<div class="container">
+			<ui:insert name="content" />
+		</div>
+	</main>
+	
+</h:body>
+</html>

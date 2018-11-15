@@ -1,0 +1,70 @@
+<ui:composition template="/WEB-INF/templates/layout.xhtml" 
+   xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:h="http://xmlns.jcp.org/jsf/html"
+   xmlns:f="http://xmlns.jcp.org/jsf/core"
+   xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+   xmlns:p="http://primefaces.org/ui"
+   xmlns:c="http://java.sun.com/jsp/jstl/core">
+ 
+ 	<ui:define name="title">
+	    <title>Marcas</title>
+	</ui:define>
+ 
+    <ui:define name="content">
+		
+		<h2>Marcas</h2>
+		<h:form class="form-signin" id="form" enctype="multipart/form-data">
+		<div class="form-group">
+			<div class="row">
+				<div class="container crud-menu">
+					<p:commandButton value="Cadastrar Marca" icon="ui-icon-plus" action="#{marca.novo}"/>
+				</div>
+			</div>
+		</div>
+		
+		<h:outputText styleClass="customHeader" value="Não existem marcas cadastradas" rendered="#{empty marca.marcas}"/>
+		
+		<!-- Atualizar bean -->
+		<f:metadata>
+			<f:viewParam name="dummy" />
+			<f:event listener="#{marca.preRender}" type="preRenderView" />
+		</f:metadata>
+		
+		<p:messages/>
+		<div class="row">
+			<ui:repeat var="obj" value="#{marca.marcas}" varStatus="status">
+					<div class="card " style="width: 22rem;">
+						<p:graphicImage styleClass="card-img-top" value="#{marca.foto}" cache="false">
+							<f:param name="id" value="#{obj.codigo}" />
+						</p:graphicImage>
+						<h:panelGroup rendered="#{obj.logo == null}">
+							<h:graphicImage styleClass="card-img-top" value="/resources/images/default.png" alt="" />
+						</h:panelGroup>
+						<div class="card-body">
+						<h5 class="card-title">#{obj.nome}</h5>
+						<p:commandLink update="form" action="#{marca.editar}">
+			                <f:setPropertyActionListener value="#{obj}" target="#{marca.obj}" />
+			                <i class="fa fa-fw fa-edit" aria-hidden="true"></i>Editar
+			            </p:commandLink><br/>
+			            <p:commandLink update="form" oncomplete="PF('confirmacao').show(); return false;">
+			                <f:setPropertyActionListener value="#{obj}" target="#{marca.obj}" />
+			                <i class="fa fa-fw fa-trash" aria-hidden="true"></i>Remover
+			            </p:commandLink>
+						</div>
+					</div>
+			</ui:repeat>
+		</div>
+		
+		<p:confirmDialog header="Exclusão de item"
+				message="Tem certeza que deseja excluir esse registro?"
+				widgetVar="confirmacao">
+				<p:commandButton value="Sim" action="#{marca.excluir}"
+					update="form" process="@this"
+					oncomplete="PF('confirmacao').hide()" />
+				<p:button value="Não"
+					onclick="PF('confirmacao').hide(); return false;" />
+			</p:confirmDialog>
+		</h:form>
+		
+	</ui:define>
+</ui:composition>

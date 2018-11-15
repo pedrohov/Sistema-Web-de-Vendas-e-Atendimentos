@@ -1,0 +1,198 @@
+<ui:composition template="/WEB-INF/templates/layout.xhtml" 
+   xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:h="http://xmlns.jcp.org/jsf/html"
+   xmlns:f="http://xmlns.jcp.org/jsf/core"
+   xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+   xmlns:p="http://primefaces.org/ui">
+ 
+ 	<ui:define name="title">
+	    <title>Dashboard</title>
+	</ui:define>
+ 
+    <ui:define name="content">
+		<h2>Dashboard</h2>
+		<h:form id="form">
+		
+		<!-- Atualizar bean -->
+		<f:metadata>
+			<f:viewParam name="dummy" />
+			<f:event listener="#{graficos.preRender}" type="preRenderView" />
+		</f:metadata>
+		
+		<div class="form-group">
+			<div class="row">
+				<div class="container crud-menu">
+					<h:link outcome="/produtos/novo_produto" style="margin-right: 10px;">Cadastrar Produto</h:link>
+					<h:link outcome="/clientes/novo_cliente" style="margin-right: 10px;">Cadastrar Cliente</h:link>
+					<h:link outcome="/servicos/novo_servico">Cadastrar Serviço</h:link>				
+				</div>
+			</div>
+		</div>
+		
+		<div class="form-group dashboard-group">
+			<div class="form-row">
+				<div class="col">
+					<h5>Vendas por mês do ano de #{graficos.ano}</h5>
+				</div>
+			</div>
+			<div class="form-row">
+				<div class="col">
+					<p:chart type="bar" model="#{graficos.modeloVendas}" style="max-height: 400px;" cache="false"/>				
+				</div>
+			</div>
+		</div>
+		
+		<div class="form-group dashboard-group">
+			<div class="form-row">
+				<div class="col">
+					<h5>Vendas mais lucrativas</h5>
+				</div>
+			</div>
+			<div class="form-row">
+				<div class="col">
+					<p:dataTable value="#{graficos.topVendas}"
+						 var="obj"
+						 id="tbVendas"
+						 emptyMessage="Não existem registros cadastrados.">
+				
+						<p:column headerText="Código" width="7%" style="text-align: center !important;">
+							<h:outputText value="#{obj.codigo}" />
+						</p:column>
+						
+						<p:column headerText="Cliente">
+							<h:outputText value="#{obj.cliente.nome}" />
+						</p:column>
+						
+						<p:column headerText="Atendente">
+							<h:outputText value="#{obj.vendedor.nome}" />
+						</p:column>
+						
+						<p:column headerText="Total">
+							<h:outputText value="R$ #{obj.total}" />
+						</p:column>
+						
+						<p:column headerText="Data"  width="20%">
+							<h:outputText value="#{obj.data}" />
+						</p:column>
+						
+						<p:column headerText="Opções" style="text-align: center;" width="20%">
+							<p:commandLink update="form" oncomplete="PF('detalhes').show(); return false;">
+				                <f:setPropertyActionListener value="#{obj}" target="#{graficos.venda}" />
+				                <i class="fa fa-fw fa-list" aria-hidden="true"></i>Ver Detalhes
+				            </p:commandLink><br/>
+						</p:column>
+					</p:dataTable>	
+				</div>
+			</div>
+		</div>
+		
+		<div class="form-group dashboard-group">
+			<div class="form-row">
+				<div class="col">
+					<h5>Clientes Cadastrados</h5>
+				</div>
+			</div>
+			<div class="form-row">
+				<div class="col">
+					<p:dataTable value="#{graficos.clientes}"
+						 var="obj"
+						 id="tbClientes"
+						 emptyMessage="Não existem registros cadastrados.">
+				
+						<p:column headerText="Código" width="7%" style="text-align: center !important;">
+							<h:outputText value="#{obj.codigo}" />
+						</p:column>
+						
+						<p:column headerText="Nome" width="20%">
+							<h:outputText value="#{obj.nome}" />
+						</p:column>
+						
+						<p:column headerText="Email">
+							<h:outputText value="#{obj.email}" />
+						</p:column>
+						
+						<p:column headerText="Endereço">
+							<h:outputText value="#{obj.endereco}" />
+						</p:column>
+						
+						<p:column headerText="Nascimento">
+							<h:outputText value="#{obj.dataNascimento}" />
+						</p:column>
+						
+						<p:column headerText="Sexo">
+							<h:outputText value="#{obj.sexo.descricao}" />
+						</p:column>
+						
+						<p:column headerText="Opções">
+						<p:commandLink update="form" oncomplete="PF('clienteDetalhes').show(); return false;">
+					                <f:setPropertyActionListener value="#{obj}" target="#{graficos.cliente}" />
+					                <i class="fa fa-fw fa-list" aria-hidden="true"></i>Ver informações
+					            </p:commandLink>
+						</p:column>
+					</p:dataTable>	
+				</div>
+			</div>
+		</div>
+
+		<p:dialog header="Exibir Detalhes" widgetVar="detalhes" modal="true"
+				  showEffect="blind" hideEffect="blind"  closeOnEscape="true"
+				  id="showDetails" cellpadding="5">
+            <p:panelGrid columns="2" layout="grid">
+            	<p:outputLabel value="Cliente:" for="txtCliNome" />
+            	<h:outputText value="#{graficos.venda.cliente.nome}" id="txtCliNome" />
+            	<p:outputLabel value="Atendente:" for="txtAtNome" />
+            	<h:outputText value="#{graficos.venda.vendedor.nome}" id="txtAtNome" />
+            	<p:outputLabel value="Total" for="txtVTotal" />
+            	<h:outputText value="R$ #{graficos.venda.total}" id="txtVTotal" />
+            	<p:outputLabel value="Itens vendidos:" for="tbShowVProdutos" />
+     				<p:outputLabel value=" " />
+        	</p:panelGrid>
+        	<p:dataTable value="#{graficos.venda.itens}"
+	 		 var="obj" style="width: 360px;"
+	 		 id="tbShowVProdutos"
+	 		 emptyMessage="Nenhum produto vendido.">
+
+				<p:column headerText="Produto" width="10%">
+					<h:outputText value="#{obj.produto.nome}" />
+				</p:column>
+				
+				<p:column headerText="Preço" width="10%">
+					<h:outputText value="R$ #{obj.produto.preco}" />
+				</p:column>
+				
+				<p:column headerText="Quantidade" width="10%">
+					<h:outputText value="#{obj.quantidade}" />
+				</p:column>
+				
+				<p:column headerText="Total" width="10%">
+					<h:outputText value="R$ #{obj.total}" />
+				</p:column>
+			</p:dataTable>
+		</p:dialog>
+		
+		<p:dialog header="Exibir Detalhes" widgetVar="clienteDetalhes" modal="true"
+				  showEffect="blind" hideEffect="blind"  closeOnEscape="true"
+				  cellpadding="5">
+			<p:graphicImage style="max-width: 250px;" styleClass="img-fluid img-thumbnail" 
+							value="#{graficos.foto}" cache="false">
+				<f:param name="id" value="#{graficos.cliente.codigo}" />
+			</p:graphicImage>
+			<p:outputLabel value="Nenhuma imagem fornecida" rendered="#{graficos.cliente.foto == null}"/>
+            <p:panelGrid columns="2">
+            	<p:outputLabel value="Nome:" for="txtNome" />
+            	<h:outputText value="#{graficos.cliente.nome}" id="txtNome" />
+            	<p:outputLabel value="CPF:" for="txtCPF" />
+            	<h:outputText value="#{graficos.cliente.cpf}" id="txtCPF" />
+            	<p:outputLabel value="Endereço:" for="txtEndereco" />
+            	<h:outputText value="#{graficos.cliente.endereco}" id="txtEndereco" />
+            	<p:outputLabel value="Data de Nascimento:" for="txtData" />
+            	<h:outputText value="#{graficos.cliente.dataNascimento}" id="txtData" />
+            	<p:outputLabel value="Email" for="txtEmail" />
+            	<h:outputText value="#{graficos.cliente.email}" id="txtEmail" />
+            	<p:outputLabel value="Login:" for="txtLogin" />
+            	<h:outputText value="#{graficos.cliente.login}" id="txtLogin" />
+        	</p:panelGrid>
+		</p:dialog>
+  	</h:form>
+	</ui:define>
+</ui:composition>

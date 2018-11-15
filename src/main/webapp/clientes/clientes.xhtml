@@ -1,0 +1,106 @@
+<ui:composition template="/WEB-INF/templates/layout.xhtml" 
+   xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:h="http://xmlns.jcp.org/jsf/html"
+   xmlns:f="http://xmlns.jcp.org/jsf/core"
+   xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+   xmlns:p="http://primefaces.org/ui"
+   xmlns:c="http://java.sun.com/jsp/jstl/core">
+ 
+ 	<ui:define name="title">
+	    <title>Clientes</title>
+	</ui:define>
+ 
+    <ui:define name="content">
+		<h2>Clientes</h2>
+		<h:form class="form-signin" id="form" enctype="multipart/form-data">
+		<div class="form-group">
+			<div class="row">
+				<div class="container crud-menu">
+					<p:commandButton value="Cadastrar Cliente" icon="ui-icon-plus" action="#{cliente.novo}"/>
+				</div>
+			</div>
+		</div>
+	
+		<h:outputText styleClass="customHeader" value="Não existem clientes cadastrados" rendered="#{empty cliente.clientes}"/>
+		
+		<!-- Atualizar bean -->
+		<f:metadata>
+			<f:viewParam name="dummy" />
+			<f:event listener="#{cliente.preRender}" type="preRenderView" />
+		</f:metadata>
+		
+		<p:messages/>
+		<div class="row">
+			<ui:repeat var="obj" value="#{cliente.clientes}">
+					<div class="card " style="width: 22rem;">
+						<p:graphicImage styleClass="card-img-top" value="#{cliente.foto}" cache="false">
+							<f:param name="id" value="#{obj.codigo}" />
+						</p:graphicImage>
+						<div class="card-body">
+						<h5 class="card-title">#{obj.nome}</h5>
+						</div>
+						<ul class="list-group list-group-flush">
+							<li class="list-group-item"><i class="fa fa-envelope" aria-hidden="true"></i>#{obj.email}</li>
+							<h:panelGroup rendered="#{not empty obj.telefone}">
+								<li class="list-group-item"><i class="fa fa-phone" aria-hidden="true"></i>#{obj.telefone}</li>
+							</h:panelGroup>
+							<h:panelGroup rendered="#{not empty obj.endereco}">
+								<li class="list-group-item"><i class="fa fa-road" aria-hidden="true"></i>#{obj.endereco}</li>
+							</h:panelGroup>
+						</ul>
+						<div class="card-body">
+								<p:commandLink update="form" oncomplete="PF('detalhes').show(); return false;">
+					                <f:setPropertyActionListener value="#{obj}" target="#{cliente.obj}" />
+					                <i class="fa fa-fw fa-list" aria-hidden="true"></i>Ver detalhes
+					            </p:commandLink><br/>
+						
+								<p:commandLink update="form" action="#{cliente.editar}">
+					                <f:setPropertyActionListener value="#{obj}" target="#{cliente.obj}" />
+					                <i class="fa fa-fw fa-edit" aria-hidden="true"></i>Editar
+					            </p:commandLink><br/>
+					            <p:commandLink update="form" oncomplete="PF('confirmacao').show(); return false;">
+					                <f:setPropertyActionListener value="#{obj}" target="#{cliente.obj}" />
+					                <i class="fa fa-fw fa-trash" aria-hidden="true"></i>Remover
+					            </p:commandLink>
+						</div>
+					</div>
+			</ui:repeat>
+		</div>
+		
+		<p:confirmDialog header="Exclusão de item"
+				message="Tem certeza que deseja excluir esse registro?"
+				widgetVar="confirmacao">
+				<p:commandButton value="Sim" action="#{cliente.excluir}"
+					update="form" process="@this"
+					oncomplete="PF('confirmacao').hide()" />
+				<p:button value="Não"
+					onclick="PF('confirmacao').hide(); return false;" />
+			</p:confirmDialog>
+			
+		<p:dialog header="Exibir Detalhes" widgetVar="detalhes" modal="true"
+				  showEffect="blind" hideEffect="blind"  closeOnEscape="true"
+				  cellpadding="5">
+			<p:graphicImage style="max-width: 250px;" styleClass="img-fluid img-thumbnail" 
+							value="#{cliente.foto}" cache="false">
+				<f:param name="id" value="#{obj.codigo}" />
+			</p:graphicImage>
+			<p:outputLabel value="Nenhuma imagem fornecida" rendered="#{cliente.obj.foto == null}"/>
+            <p:panelGrid columns="2">
+            	<p:outputLabel value="Nome:" for="txtNome" />
+            	<h:outputText value="#{cliente.obj.nome}" id="txtNome" />
+            	<p:outputLabel value="CPF:" for="txtCPF" />
+            	<h:outputText value="#{cliente.obj.cpf}" id="txtCPF" />
+            	<p:outputLabel value="Endereço:" for="txtEndereco" />
+            	<h:outputText value="#{cliente.obj.endereco}" id="txtEndereco" />
+            	<p:outputLabel value="Data de Nascimento:" for="txtData" />
+            	<h:outputText value="#{cliente.obj.dataNascimento}" id="txtData" />
+            	<p:outputLabel value="Email" for="txtEmail" />
+            	<h:outputText value="#{cliente.obj.email}" id="txtEmail" />
+            	<p:outputLabel value="Login:" for="txtLogin" />
+            	<h:outputText value="#{cliente.obj.login}" id="txtLogin" />
+        	</p:panelGrid>
+		</p:dialog>
+		</h:form>
+		
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,130 @@
+<ui:composition template="/WEB-INF/templates/layout.xhtml" 
+   xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:h="http://xmlns.jcp.org/jsf/html"
+   xmlns:f="http://xmlns.jcp.org/jsf/core"
+   xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+   xmlns:p="http://primefaces.org/ui">
+ 
+ 	<ui:define name="title">
+	    <title>Atendimentos</title>
+	</ui:define>
+ 
+    <ui:define name="content">
+		<h2>Atendimentos</h2>
+		<h:form id="form" enctype="multipart/form-data">
+			<!-- Atualizar bean -->
+			<f:metadata>
+				<f:viewParam name="dummy" />
+				<f:event listener="#{atendimento.preRender}" type="preRenderView" />
+			</f:metadata>
+		
+		<div class="form-group">
+			<div class="row ">
+				<div class="col crud-menu vertical-align">
+					<p:commandButton value="Cadastrar Atendimento" icon="ui-icon-plus" action="#{atendimento.novo}"/>
+				</div>
+			</div>
+		</div>
+		
+		<h:outputText styleClass="customHeader" value="Não existem atendimentos cadastrados" rendered="#{empty atendimento.atendimentos}"/>
+		
+		<div class="container">
+			<ui:repeat var="obj" value="#{atendimento.atendimentos}">
+				<div class="row row-striped">		
+					<div class="col-2 text-right">
+						<h1 class="display-3"><span class="badge badge-secondary">#{obj.dia}</span></h1>
+						<h2>#{obj.mes}</h2>
+					</div>
+					<div class="col-10">
+						<h3 class="text-uppercase"><strong>#{obj.servico.nome}</strong></h3>
+						<ul class="list-inline">
+							<li class="list-inline-item" style="font-weight: bold;">Atendente: 
+								<p:commandLink update="form" oncomplete="PF('detalhesAtendente').show(); return false;">
+					                <f:setPropertyActionListener value="#{obj}" target="#{atendimento.obj}" />
+					               #{obj.atendente.nome}
+					            </p:commandLink>
+				            </li>
+						</ul>
+						<ul class="list-inline">
+						    <li class="list-inline-item"><i class="fa fa-calendar" aria-hidden="true"></i>#{obj.diaSemana}</li>
+							<li class="list-inline-item"><i class="fa fa-clock-o" aria-hidden="true"></i>#{obj.inicio} - #{obj.fim}</li>
+						    <li class="list-inline-item">
+						    	<p:commandLink update="form" oncomplete="PF('detalhesCliente').show(); return false;">
+					                <f:setPropertyActionListener value="#{obj}" target="#{atendimento.obj}" />
+					                <i class="fa fa-user" aria-hidden="true"></i>#{obj.cliente.nome}
+					            </p:commandLink>
+					        </li>
+					        <h:panelGroup rendered="#{not empty obj.cliente.telefone}">
+								<li class="list-inline-item"><i class="fa fa-phone-square" aria-hidden="true"></i>#{obj.cliente.telefone}</li>
+							</h:panelGroup>
+						</ul>
+						<ul class="list-inline">
+							<li class="list-inline-item">
+							<p:commandLink update="form" action="#{atendimento.editar}">
+				                <f:setPropertyActionListener value="#{obj}" target="#{atendimento.obj}" />
+				                <i class="fa fa-fw fa-edit" aria-hidden="true"></i>Editar
+				            </p:commandLink></li>
+				            <li class="list-inline-item">
+				            <p:commandLink update="form" oncomplete="PF('confirmacao').show(); return false;">
+				                <f:setPropertyActionListener value="#{obj}" target="#{atendimento.obj}" />
+				                <i class="fa fa-fw fa-trash" aria-hidden="true"></i>Remover
+				            </p:commandLink></li>
+						</ul>
+						<p class="atendimento-description" style="margin-top: 10px;">#{obj.comentarios}</p>
+					</div>
+				</div>
+			</ui:repeat>
+		</div>
+		
+		<p:confirmDialog header="Exclusão de item"
+				message="Tem certeza que deseja excluir esse registro?"
+				widgetVar="confirmacao">
+				<p:commandButton value="Sim" action="#{atendimento.excluir}"
+					update="form" process="@this"
+					oncomplete="PF('confirmacao').hide()" />
+				<p:button value="Não"
+					onclick="PF('confirmacao').hide(); return false;" />
+			</p:confirmDialog>
+			
+		<p:dialog header="Cliente" widgetVar="detalhesCliente" modal="true"
+				  showEffect="blind" hideEffect="blind"  closeOnEscape="true"
+				  cellpadding="5">
+			<p:graphicImage style="max-width: 250px;" styleClass="img-fluid img-thumbnail" 
+							value="#{atendimento.foto}" cache="false">
+				<f:param name="id" value="#{obj.cliente.codigo}" />
+			</p:graphicImage>
+			<p:outputLabel value="Nenhuma imagem fornecida" rendered="#{atendimento.obj.cliente.foto == null}"/>
+            <p:panelGrid columns="2">
+            	<p:outputLabel value="Nome:" for="txtNome" />
+            	<h:outputText value="#{atendimento.obj.cliente.nome}" id="txtNome" />
+            	<p:outputLabel value="CPF:" for="txtCPF" />
+            	<h:outputText value="#{atendimento.obj.cliente.cpf}" id="txtCPF" />
+            	<p:outputLabel value="Endereço:" for="txtEndereco" />
+            	<h:outputText value="#{atendimento.obj.cliente.endereco}" id="txtEndereco" />
+            	<p:outputLabel value="Data de Nascimento:" for="txtData" />
+            	<h:outputText value="#{atendimento.obj.cliente.dataNascimento}" id="txtData" />
+            	<p:outputLabel value="Email" for="txtEmail" />
+            	<h:outputText value="#{atendimento.obj.cliente.email}" id="txtEmail" />
+            	<p:outputLabel value="Login:" for="txtLogin" />
+            	<h:outputText value="#{atendimento.obj.cliente.login}" id="txtLogin" />
+        	</p:panelGrid>
+		</p:dialog>
+		
+		<p:dialog header="Atendente" widgetVar="detalhesAtendente" modal="true"
+				  showEffect="blind" hideEffect="blind"  closeOnEscape="true"
+				  cellpadding="5">
+            <p:panelGrid columns="2">
+            	<p:outputLabel value="Nome:" for="txtAtNome" />
+            	<h:outputText value="#{atendimento.obj.atendente.nome}" id="txtAtNome" />
+            	<p:outputLabel value="Data de Nascimento:" for="txtAtData" />
+            	<h:outputText value="#{atendimento.obj.atendente.dataNascimento}" id="txtAtData" />
+            	<p:outputLabel value="Email" for="txtAtEmail" />
+            	<h:outputText value="#{atendimento.obj.atendente.email}" id="txtAtEmail" />
+            	<p:outputLabel value="Login:" for="txtAtLogin" />
+            	<h:outputText value="#{atendimento.obj.atendente.login}" id="txtAtLogin" />
+        	</p:panelGrid>
+		</p:dialog>
+  	</h:form>
+  	
+	</ui:define>
+</ui:composition>

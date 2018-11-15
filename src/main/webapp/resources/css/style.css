@@ -1,0 +1,390 @@
+body, html {
+	background-color: #F2F2F2;
+	font-size: .90rem;
+	height: 100%;
+	font-family: 'Montserrat', sans-serif;
+}
+
+textarea {
+	resize: none;
+}
+
+.dashboard-group {
+	margin: 30px 0; 
+}
+
+.vertical-align {
+    display: flex;
+    align-items: center;
+}
+
+#cover {
+	width: 100%;
+	height: 100vh;
+	background-color: rgba(0, 0, 0, 0.7);
+	position: fixed;
+	z-index: 1100;
+}
+
+#cover .row {
+	width: 100%;
+	margin: 0;
+}
+
+form {
+	margin-bottom: 30px;
+}
+
+.form-control {
+	
+}
+
+.form-cover-bg {
+	background-color: #f5f5f5;
+	padding: 25px 10px;
+}
+
+.crud-form-btn {
+	margin: 10px 0 0;
+}
+
+.crud-form-btn:disabled {
+	background-color: #000;
+	border: 1px solid #000;
+}
+
+.attributes {
+	min-height: 100px;
+	max-height: 200px;
+	overflow-y: scroll;
+}
+
+.btn-form {
+	height: auto;
+	padding: 10px;
+	font-size: 14px;
+	border: 2px solid #E6E6E6;
+}
+
+.navbar-light {
+	background-color: #FFF;
+	min-height: 80px;
+	box-shadow: inset 0 -1px 0 rgba(0, 0, 0, .1);
+}
+
+.navbar-brand {
+	padding-left: 40px;
+}
+
+.nav-middle {
+	text-align: center;
+	text-decoration: none;
+	color: #34495E;
+}
+
+.nav-middle:hover {
+	color: #0069D9;
+}
+
+.nav-middle i {
+	font-size: 16px;
+}
+
+.btn-custom {
+	background-color: #34495E;
+	color: #FFF;
+}
+
+.btn-custom:hover {
+	background-color: #0069D9;
+}
+
+.attribute {
+	width: calc(100% - 10px);
+	background-color: #E6E6E6;
+	color: #333;
+	margin: 5px;
+	padding: 3px 10px;
+}
+
+.attribute:last-child {
+	margin-bottom: 15px;
+}
+
+.delete-attrib {
+	cursor: pointer;
+	border: none;
+	background: none;
+}
+
+/*
+ * Sidebar
+ */
+
+.fas, .far {
+	margin-right: 10px;
+}
+
+.fa {
+	margin-right: 5px;
+}
+
+.list-inline-item .fas,
+.list-inline-item .far {
+	margin-right: 5px;
+}
+
+.list-inline {
+	margin: 0;
+	padding: 0;
+}
+
+.sidebar {
+  position: fixed;
+  top: 80px;
+  bottom: 0;
+  left: 0;
+  z-index: 100; /* Behind the navbar */
+  padding: 20px 0 0; /* Height of navbar */
+  /*box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);*/
+  background-color: #34495E;
+}
+
+.sidebar-sticky {
+  position: relative;
+  top: 0;
+  height: calc(100vh - 20px);
+  padding-top: .5rem;
+  overflow-x: hidden;
+  overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+}
+
+@supports ((position: -webkit-sticky) or (position: sticky)) {
+  .sidebar-sticky {
+    position: -webkit-sticky;
+    position: sticky;
+  }
+}
+
+.sidebar .nav-link {
+  font-weight: 500;
+  color: #FFF;
+}
+
+.sidebar .nav-item.active {
+  color: #FFF;
+  background-color: #476482;
+}
+
+.sidebar .nav-item.active:hover {
+  background-color: #476482;
+}
+
+.sidebar .nav-item.active:hover .nav-link {
+  color: #FFF;
+}
+
+.sidebar-heading {
+  font-size: .75rem;
+  text-transform: uppercase;
+}
+
+.sidebar .nav-item {
+	background-color: rgba(0, 0, 0, 0);
+	-webkit-transition: all 0.3s; /* Safari */
+    transition: all 0.3s;
+	padding: 3px 0 3px 20px;
+	box-shadow: inset 0 -1px 0 rgba(255, 255, 255, .1);
+}
+
+.sidebar .nav-item:last-child {
+	box-shadow: none;
+}
+
+.sidebar .nav-item:hover {
+	background-color: #F2F2F2;
+}
+
+.sidebar .nav-item:hover .nav-link {
+	color: #34495E;
+}
+
+/*
+ * Content
+ */
+
+[role="main"] {
+  padding-top: 120px;
+}
+
+.crud-menu {
+	margin: 10px 0 0;
+}
+
+.crud-menu button,
+.crud-menu a {
+	border: none;
+	background: #FFF;
+	border-radius: 15px;
+	padding: 5px 10px;
+	text-decoration: none;
+	color: #34495E;
+	font-weight: bold;
+	text-shadow: none !important;
+}
+
+.crud-menu button:hover,
+.crud-menu a:hover {
+
+	color: #FFF;
+	background: #0069D9;
+
+	-moz-transition: all 0.25s ease 0s;
+	-ms-transition: all 0.25s ease 0s;
+	transition: all 0.25s ease 0s;
+}
+
+.row-striped:nth-of-type(even){
+	background-color: #E6E6E6;
+	border-left: 4px #FFF solid;
+}
+
+.row-striped:nth-of-type(odd){
+	background-color: #fff;
+	border-left: 4px #34495E solid;
+}
+
+.row-striped {
+    padding: 15px 0;
+}
+
+.atendimento-description {
+	max-width: 800px;
+	text-align: justify;
+}
+
+label {
+	font-weight: bold;
+}
+
+.card-title {
+	font-weight: bold;
+}
+    
+.card-product .img-wrap {
+    border-radius: 3px 3px 0 0;
+    overflow: hidden;
+    position: relative;
+    height: 220px;
+    text-align: center;
+}
+.card-product .img-wrap img {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: cover;
+}
+.card-product .info-wrap {
+    overflow: hidden;
+    padding: 15px;
+    border-top: 1px solid #eee;
+}
+.card-product .bottom-wrap {
+    padding: 15px;
+    border-top: 1px solid #eee;
+
+}
+
+.price-wrap {
+	text-align: center;
+	padding-bottom: 15px;
+}
+
+.label-rating { margin-right:10px;
+    color: #333;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.card-product .price-old {
+    color: #999;
+}
+
+.price-new {
+	color: #30a51c;
+	font-size: 24px;
+	font-weight: bold;
+}
+
+.singin-wrapper {
+	height: 100%;
+	display: -ms-flexbox;
+  	display: flex;
+  	-ms-flex-align: center;
+ 	align-items: center;
+  	background-color: #f5f5f5;
+  	margin-top: -60px;
+}
+
+.form-signin {
+  width: 100%;
+  /*max-width: 330px;*/
+  margin: 0 0 60px 0;
+}
+
+.form-signin .checkbox {
+  font-weight: 400;
+}
+
+.form-signin .form-control {
+  position: relative;
+  height: auto;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.customHeader {
+	font-size: 18px;
+	font-weight: bold;
+}
+
+override default primefaces css
+
+.ui-datatable thead th, .ui-datatable tbody td, .ui-datatable tfoot td {
+    border-style: none !important;
+}
+
+.ui-inputnumber .ui-widget,
+.ui-selectonemenu .ui-widget {
+	width: 100% !important;
+}
+
+th {
+	text-align: left !important;
+	/*background: rgba(0, 0, 0, 0.3) !important;*/
+	text-shadow: none !important;
+}
+
+.customInp{
+	background: #fff !important;
+	width: 100% !important;
+}
+
+.card {
+	margin: 0 10px 10px 10px;
+}
