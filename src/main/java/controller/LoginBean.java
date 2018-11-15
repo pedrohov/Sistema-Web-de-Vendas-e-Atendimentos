@@ -15,8 +15,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import modelo.Usuario;
-import service.UsuarioService;
+import modelo.Atendente;
+import service.AtendenteService;
 import util.FacesMensagens;
 import util.NegocioException;
 
@@ -58,9 +58,9 @@ public class LoginBean implements Serializable{
 	
 	private void usuarioAdmin() {
 		try {
-			UsuarioService service = new UsuarioService();
+			AtendenteService service = new AtendenteService();
 			if(service.buscarTodos().size() == 0) {
-				Usuario admin = new Usuario();
+				Atendente admin = new Atendente();
 				Set<String> permissao = new HashSet<String>();
 				permissao.add("ADMIN");
 				admin.setPermissao(permissao);
