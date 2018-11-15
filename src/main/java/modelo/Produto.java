@@ -4,12 +4,16 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Produto implements Serializable {
@@ -21,6 +25,8 @@ public class Produto implements Serializable {
     private Integer codigo;
     private String nome;
     private String descricao;
+    @OneToOne(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+    @JoinColumn(name="codMarca", nullable=true)
     private Marca marca;
     private Float preco;
     private Integer estoque;

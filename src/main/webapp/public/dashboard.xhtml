@@ -11,7 +11,10 @@
  
     <ui:define name="content">
 		<h2>Dashboard</h2>
-		<h:form id="form">
+		
+		<h:outputText styleClass="customHeader" value="Bem vindo, #{seguranca.nomeUsuario}!" rendered="#{seguranca.cliente}" />
+		
+		<h:form id="form" rendered="#{seguranca.admin or seguranca.atendente}">
 		
 		<!-- Atualizar bean -->
 		<f:metadata>
@@ -24,7 +27,7 @@
 				<div class="container crud-menu">
 					<h:link outcome="/produtos/novo_produto" style="margin-right: 10px;">Cadastrar Produto</h:link>
 					<h:link outcome="/clientes/novo_cliente" style="margin-right: 10px;">Cadastrar Cliente</h:link>
-					<h:link outcome="/servicos/novo_servico">Cadastrar Serviço</h:link>				
+					<h:link outcome="/servicos/novo_servico" rendered="#{seguranca.admin}">Cadastrar Serviço</h:link>				
 				</div>
 			</div>
 		</div>

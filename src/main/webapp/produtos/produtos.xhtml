@@ -42,10 +42,12 @@
 							<h4 class="title">#{obj.nome}</h4>
 							<p class="desc">#{obj.descricao}</p>
 							<div class="rating-wrap">
+								<ul class="label-rating-group">
 								<ui:repeat var="attrib" value="#{obj.atributos}">
-	                            	<div class="label-rating">#{attrib}</div>
+	                            	<li class="label-rating">#{attrib}</li>
 	                            </ui:repeat>
-	                           </div>
+	                            </ul>
+	                        </div>
 					</div>
 					<div class="bottom-wrap">
 						<div class="price-wrap h5">
@@ -103,6 +105,8 @@
             	<h:outputText value="#{produto.obj.preco}" id="txtPreco" />
             	<p:outputLabel value="Estoque:" for="txtEstoque" />
             	<h:outputText value="#{produto.obj.estoque}" id="txtEstoque" />
+           		<p:outputLabel rendered="#{produto.obj.marca != null}" value="Marca" for="txtMarca" />
+           		<h:outputText rendered="#{produto.obj.marca != null}" value="#{produto.obj.marca.nome}" id="txtMarca" />
             	<p:outputLabel value="Atributos:" />
             	<ui:repeat var="attrib" value="#{obj.atributos}">
                 	<h:outputText value="#{attrib}"/><br />

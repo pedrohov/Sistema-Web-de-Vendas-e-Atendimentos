@@ -26,7 +26,7 @@ import javax.persistence.UniqueConstraint;
 @Entity
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="TIPO_USUARIO", discriminatorType=DiscriminatorType.STRING)
-public abstract class Usuario implements Serializable {
+public class Usuario implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
