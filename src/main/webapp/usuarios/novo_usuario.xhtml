@@ -67,29 +67,29 @@
 		
 		<div class="form-group">
 			<div class="form-row">
-				<div class="col">
+				<div class="col-lg">
 					<h:outputLabel value="Data de Nascimento" id="lbNasc" for="inpNasc" />
 				</div>
-				<div class="col">
+				<div class="col-lg">
 					<h:outputLabel value="Sexo *" id="lbSexo" for="rdbSexo" />
 				</div>
-				<div class="col">
+				<div class="col-lg">
 					<h:outputLabel value="Tipo de Usuário *" id="lbTipo" for="rdbPermissao" />
 				</div>
 			</div>
 			<div class="form-row">
-				<div class="col">
+				<div class="col-lg">
 					<p:calendar id="inpNasc" value="#{usuario.obj.dataNascimento}"
 	  		                    pattern="dd/MM/yyyy" 
 				      			locale="pt" autocomplete="off" />
 				</div>
-				<div class="col">
+				<div class="col-lg">
 			        <p:selectOneRadio id="rdbSexo" value="#{usuario.obj.sexo}">
 			        	<f:selectItems value="#{usuario.sexos}" var="sexo" itemValue="#{sexo}" itemLabel="#{sexo.descricao}"/>
 			        </p:selectOneRadio>
 				</div>
 			
-				<div class="col">
+				<div class="col-lg">
 					<p:selectManyCheckbox  id="rdbPermissao" value="#{usuario.permissoes}"
 										   requiredMessage="Nenhuma permissão adicionada para o usuário." required="true">
 			        	<f:selectItem itemLabel="Administrador" itemValue="ADMIN" />
@@ -144,10 +144,15 @@
 			</div>
 		</div>
 				
-		
-	  	<h:commandButton class="btn btn-lg btn-primary btn-block"
-						 value="Cadastrar" id="btnCadastro"
-						 action="#{usuario.adicionar}" />
+		<div class="form-group">
+		  	<div class="form-row">
+		  		<div class="col">
+				  	<h:commandButton class="btn btn-primary btn-block"
+									 value="Cadastrar" id="btnCadastro"
+									 action="#{usuario.adicionar}" />
+				</div>
+			</div>
+		</div>
 	
     </div>
     </div>

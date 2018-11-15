@@ -395,6 +395,21 @@ override default primefaces css
 	width: 100% !important;
 }
 
+/* Campo da setinha de select one menu */
+.ui-selectonemenu-trigger {
+	padding: 15px !important;	
+	border: none !important;
+	background: #fff !important;
+}
+
+/* Item selecionado em select one menu */
+.ui-selectonemenu-label.ui-inputfield {
+	margin: 0 !important;
+	padding: 0 !important;
+	box-shadow: none !important;
+	border: none !important;
+}
+
 th {
 	text-align: left !important;
 	/*background: rgba(0, 0, 0, 0.3) !important;*/

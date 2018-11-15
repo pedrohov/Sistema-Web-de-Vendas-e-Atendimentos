@@ -94,28 +94,28 @@
 		
 		<div class="form-group">
 			<div class="form-row">
-				<div class="col-3">
+				<div class="col-lg-3">
 					<h:outputLabel value="Data de Nascimento" id="lbNasc" for="inpNasc" />
 				</div>
-				<div class="col-3">
+				<div class="col-lg-3">
 					<h:outputLabel value="Sexo *" id="lbSexo" for="rdbSexo" />
 				</div>
-				<div class="col-6">
+				<div class="col-lg-6">
 						<h:outputLabel value="Foto" id="lbPhoto" for="inpPhoto" />
 				</div>		
 			</div>
 			<div class="form-row">
-				<div class="col-3">
+				<div class="col-lg-3">
 					<p:calendar id="inpNasc" value="#{cliente.obj.dataNascimento}"
 	  		                    pattern="dd/MM/yyyy"
 				      			locale="pt" autocomplete="off" />
 				</div>
-				<div class="col-3">
+				<div class="col-lg-3">
 			        <p:selectOneRadio id="rdbSexo" value="#{cliente.obj.sexo}">
 			        	<f:selectItems value="#{cliente.sexos}" var="sexo" itemValue="#{sexo}" itemLabel="#{sexo.descricao}"/>
 			        </p:selectOneRadio>
 				</div>
-				<div class="col-6">
+				<div class="col-lg-6">
 					<h:inputFile id="inpPhoto" value="#{cliente.part}"/>
 				</div>
 			</div>
@@ -166,7 +166,7 @@
 			</div>
 		</div>
 		
-	  	<h:commandButton class="btn btn-lg btn-primary btn-block"
+	  	<h:commandButton class="btn btn-primary btn-block"
 						 value="Cadastrar" id="btnCadastro"
 						 action="#{cliente.adicionar}" />
 	
