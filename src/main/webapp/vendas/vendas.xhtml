@@ -35,31 +35,52 @@
 						 selection="#{venda.obj}"
 						 rowKey="#{obj.codigo}"
 						 sortBy="#{obj.codigo}"
-						 
+						 widgetVar="wTbVendas"
 						 id="tbvendas"
 						 emptyMessage="Não existem registros cadastrados.">
 				
-				<p:column headerText="Código" width="7%" style="text-align: center !important;">
+				<p:column filterBy="#{obj.codigo}" headerText="Código" width="7%"
+						  filterMatchMode="contains" style="text-align: center !important;">
 					<h:outputText value="#{obj.codigo}" />
 				</p:column>
 				
-				<p:column headerText="Cliente">
-					<h:outputText value="#{obj.cliente.nome}" />
-				</p:column>
-				
-				<p:column headerText="Atendente">
-					<h:outputText value="#{obj.vendedor.nome}" />
-				</p:column>
+				<p:column filterBy="#{obj.cliente.nome} (#{obj.cliente.login})"
+						  headerText="Cliente"
+						  filterMatchMode="contains"
+						  width="30%">
+		            <f:facet name="filter">
+		                <p:selectOneMenu onchange="PF('wTbVendas').filter()" styleClass="custom-filter form-control customInp" style="width: auto !important">
+		                    <f:selectItem itemLabel="Filtrar por cliente" itemValue="#{null}" noSelectionOption="true" />
+		                    <f:selectItems value="#{venda.clientes}" />
+		                </p:selectOneMenu>
+		            </f:facet>
+		            <h:outputText value="#{obj.cliente.nome}" />
+		        </p:column>
+		        
+		        <p:column filterBy="#{obj.vendedor.nome} (#{obj.vendedor.login}))"
+						  headerText="Atendente"
+						  filterMatchMode="contains"
+						  width="30%">
+		            <f:facet name="filter">
+		                <p:selectOneMenu onchange="PF('wTbVendas').filter()" styleClass="custom-filter form-control customInp" style="width: auto !important">
+		                    <f:selectItem itemLabel="Filtrar por atendente" itemValue="#{null}" noSelectionOption="true" />
+		                    <f:selectItems value="#{venda.atendentes}" />
+		                </p:selectOneMenu>
+		            </f:facet>
+		            <h:outputText value="#{obj.vendedor.nome}" />
+		        </p:column>
 				
 				<p:column headerText="Total">
 					<h:outputText value="R$ #{obj.total}" />
 				</p:column>
 				
-				<p:column headerText="Data"  width="20%">
-					<h:outputText value="#{obj.data}" />
+				<p:column headerText="Data"  width="10%">
+					<h:outputText value="#{obj.data}">
+						<f:convertDateTime pattern="MM/dd/yyyy" />
+					</h:outputText>
 				</p:column>
 				
-				<p:column headerText="Opções" style="text-align: center;" width="20%">
+				<p:column headerText="Opções" style="text-align: center;" width="10%">
 					<p:commandLink update="frm" oncomplete="PF('detalhes').show(); return false;">
 		                <f:setPropertyActionListener value="#{obj}" target="#{venda.obj}" />
 		                <i class="fa fa-fw fa-list" aria-hidden="true"></i>
@@ -70,11 +91,11 @@
 	                <p:commandButton icon="ui-icon-pencil"
                                  	 value="Editar"
                                  	 action="#{venda.editar}"
-                                 	 update="frm" process="frm" />
+                                 	 update="frm" process="frm" styleClass="tableBtn" />
 					<p:commandButton icon="ui-icon-trash"
 									 process="tbvendas"
                                      value="Excluir"
-                                     update="frm"
+                                     update="frm" styleClass="tableBtn"
                                      oncomplete="PF('confirmacao').show(); return false;"/>
 				</f:facet>
 				

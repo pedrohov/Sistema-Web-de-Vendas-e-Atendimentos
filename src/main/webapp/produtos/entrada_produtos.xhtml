@@ -42,7 +42,7 @@
 						<p:selectOneMenu id="inpProduto" value="#{entProduto.obj}"
 										 required="true" styleClass="form-control customInp"
 										 requiredMessage="Selecione um produto." >
-				        	<p:ajax event="change" listener="#{entProduto.changeProduto}" update="form:inpStock"/>
+				        	<p:ajax event="change" listener="#{entProduto.changeProduto}" update="form:inpStock" process="@this"/>
 				        	<f:selectItem itemLabel="Selecionar Produto" itemValue="#{null}" />
 				            <f:selectItems value="#{entProduto.produtos}" />
 				            

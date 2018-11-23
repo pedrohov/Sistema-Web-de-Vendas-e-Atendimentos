@@ -3,7 +3,8 @@
    xmlns:h="http://xmlns.jcp.org/jsf/html"
    xmlns:f="http://xmlns.jcp.org/jsf/core"
    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-   xmlns:p="http://primefaces.org/ui">
+   xmlns:p="http://primefaces.org/ui"
+   xmlns:c="http://java.sun.com/jsp/jstl/core">
  
  	<ui:define name="title">
 	    <title>Atendimentos</title>
@@ -11,13 +12,15 @@
  
     <ui:define name="content">
 		<h2>Atendimentos</h2>
-		<h:form id="form" enctype="multipart/form-data">
-			<!-- Atualizar bean -->
+		
+		<!-- Atualizar bean -->
 			<f:metadata>
 				<f:viewParam name="dummy" />
-				<f:event listener="#{atendimento.preRender}" type="preRenderView" />
+				<f:event listener="#{atendimento.preRenderGeral}" type="preRenderView" />
 			</f:metadata>
 		
+		<h:form id="form" enctype="multipart/form-data">
+			
 		<div class="form-group">
 			<div class="row ">
 				<div class="col crud-menu vertical-align">
@@ -29,6 +32,7 @@
 		<h:outputText styleClass="customHeader" value="Não existem atendimentos cadastrados" rendered="#{empty atendimento.atendimentos}"/>
 		
 		<div class="container">
+			<h:panelGroup id="uiAtendimentos">
 			<ui:repeat var="obj" value="#{atendimento.atendimentos}">
 				<div class="row row-striped">		
 					<div class="col-2 text-right">
@@ -74,6 +78,7 @@
 					</div>
 				</div>
 			</ui:repeat>
+			</h:panelGroup>
 		</div>
 		
 		<p:confirmDialog header="Exclusão de item"
@@ -93,20 +98,20 @@
 							value="#{atendimento.foto}" cache="false">
 				<f:param name="id" value="#{obj.cliente.codigo}" />
 			</p:graphicImage>
-			<p:outputLabel value="Nenhuma imagem fornecida" rendered="#{atendimento.obj.cliente.foto == null}"/>
+			<p:outputLabel value="Nenhuma imagem fornecida" rendered="#{obj.cliente.foto == null}"/>
             <p:panelGrid columns="2">
             	<p:outputLabel value="Nome:" for="txtNome" />
-            	<h:outputText value="#{atendimento.obj.cliente.nome}" id="txtNome" />
+            	<h:outputText value="#{obj.cliente.nome}" id="txtNome" />
             	<p:outputLabel value="CPF:" for="txtCPF" />
-            	<h:outputText value="#{atendimento.obj.cliente.cpf}" id="txtCPF" />
+            	<h:outputText value="#{obj.cliente.cpf}" id="txtCPF" />
             	<p:outputLabel value="Endereço:" for="txtEndereco" />
-            	<h:outputText value="#{atendimento.obj.cliente.endereco}" id="txtEndereco" />
+            	<h:outputText value="#{obj.cliente.endereco}" id="txtEndereco" />
             	<p:outputLabel value="Data de Nascimento:" for="txtData" />
-            	<h:outputText value="#{atendimento.obj.cliente.dataNascimento}" id="txtData" />
+            	<h:outputText value="#{obj.cliente.dataNascimento}" id="txtData" />
             	<p:outputLabel value="Email" for="txtEmail" />
-            	<h:outputText value="#{atendimento.obj.cliente.email}" id="txtEmail" />
+            	<h:outputText value="#{obj.cliente.email}" id="txtEmail" />
             	<p:outputLabel value="Login:" for="txtLogin" />
-            	<h:outputText value="#{atendimento.obj.cliente.login}" id="txtLogin" />
+            	<h:outputText value="#{obj.cliente.login}" id="txtLogin" />
         	</p:panelGrid>
 		</p:dialog>
 		
@@ -115,13 +120,13 @@
 				  cellpadding="5">
             <p:panelGrid columns="2">
             	<p:outputLabel value="Nome:" for="txtAtNome" />
-            	<h:outputText value="#{atendimento.obj.atendente.nome}" id="txtAtNome" />
+            	<h:outputText value="#{obj.atendente.nome}" id="txtAtNome" />
             	<p:outputLabel value="Data de Nascimento:" for="txtAtData" />
-            	<h:outputText value="#{atendimento.obj.atendente.dataNascimento}" id="txtAtData" />
+            	<h:outputText value="#{obj.atendente.dataNascimento}" id="txtAtData" />
             	<p:outputLabel value="Email" for="txtAtEmail" />
-            	<h:outputText value="#{atendimento.obj.atendente.email}" id="txtAtEmail" />
+            	<h:outputText value="#{obj.atendente.email}" id="txtAtEmail" />
             	<p:outputLabel value="Login:" for="txtAtLogin" />
-            	<h:outputText value="#{atendimento.obj.atendente.login}" id="txtAtLogin" />
+            	<h:outputText value="#{obj.atendente.login}" id="txtAtLogin" />
         	</p:panelGrid>
 		</p:dialog>
   	</h:form>

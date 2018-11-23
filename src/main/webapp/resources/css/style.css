@@ -485,3 +485,47 @@ th {
 }
 .back { text-align: left; margin-top:10px;}
 .back a {color: #444444; font-size: 13px;text-decoration: none;}
+
+.ui-datatable .ui-datatable-header {
+    text-align: right !important;
+}
+ 
+.ui-button-text-only .ui-button-text {
+    padding: 0.3em 0.4em;
+}
+ 
+.ui-selectcheckboxmenu-panel .ui-selectcheckboxmenu-header .ui-chkbox {
+    visibility: hidden;
+}
+ 
+.year-spinner input {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+th {
+	text-align: center !important;
+	background: none !important;
+	/*background-color: #F4F4F4 !important;*/
+	background-color: #fff !important;
+	padding-bottom: 15px;
+}
+
+th input {
+	max-width: 70% !important;
+	margin: 6px auto !important;
+}
+
+.tableBtn {
+	margin: 10px 5px !important;
+	padding: 8px 5px !important;
+	background: #fff !important;
+	text-shadow: none !important;
+	-webkit-transition: all 0.3s; /* Safari */
+    transition: all 0.3s;
+}
+
+.tableBtn:hover {
+	background: #007EBE !important;
+	color: #fff !important;
+}

@@ -62,10 +62,10 @@ public class EntradaProdutoBean implements Serializable {
 	}
 	
 	public void changeProduto(AjaxBehaviorEvent event) {
-		/*if(event.getComponent().getAttributes().get("value") == null)
-			System.out.println("NULO");
+		if(event.getComponent().getAttributes().get("value") == null)
+			obj = new Produto();
 		else
-			System.out.println(event.getComponent().getAttributes().get("value"));*/
+			System.out.println(event.getComponent().getAttributes().get("value"));
 	}
 	
 }

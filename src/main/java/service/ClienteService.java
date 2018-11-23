@@ -4,7 +4,6 @@ import dao.ClienteDAO;
 import java.util.List;
 import modelo.Cliente;
 import util.NegocioException;
-import util.Util;
 
 public class ClienteService {
     
@@ -38,8 +37,9 @@ public class ClienteService {
     	else if(entidade.getPermissao() == null || (entidade.getPermissao().size() == 0))
     		throw new NegocioException("Nenhuma permissão atribuída ao usuário.");
     	else if(entidade.getCpf() == null || entidade.getCpf().trim().equals("")
-    			|| (Util.isCpfValido(entidade.getCpf()) == false))
+    			/*|| Util.isCpfValido(entidade.getCpf())*/) {
     		throw new NegocioException("CPF inválido.");
+    	}
     	else if(entidade.getLogin() == null /*|| !isLoginValido(entidade.getLogin())*/)
     		throw new NegocioException("Login inválido.");
     	

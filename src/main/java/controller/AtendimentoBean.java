@@ -40,6 +40,9 @@ public class AtendimentoBean implements Serializable {
 	private ServicoService sService = new ServicoService();
 	private List<Servico> servicos;
 	
+	private Cliente filtroCliente;
+	private Atendente filtroAtendente;
+	
 	public AtendimentoBean() {
 		setAtendimentos(service.buscarTodos());
 		setClientes(cService.buscarTodos());
@@ -98,6 +101,22 @@ public class AtendimentoBean implements Serializable {
 	private void limpar() {
 		obj = new Atendimento();
 	}
+	
+	public void filtrar() {
+		
+		if(filtroCliente != null) {
+			try {
+				setAtendimentos(service.buscarPorCliente(filtroCliente));
+				for(int i = 0; i < atendimentos.size(); i++)
+					System.out.println(atendimentos.get(i));
+			} catch (NegocioException e) {
+				e.printStackTrace();
+			}
+			System.out.println(filtroCliente);
+		} else
+			System.out.println("CLIENTE NULO");
+		
+	}
 
 	public void preRender(ComponentSystemEvent e) {
 		setAtendimentos(service.buscarTodos());
@@ -106,15 +125,21 @@ public class AtendimentoBean implements Serializable {
 		setServicos(sService.buscarTodos());
 	}
 	
+	public void preRenderGeral(ComponentSystemEvent e) {
+		setAtendimentos(service.buscarTodos());
+		setClientes(cService.buscarTodos());
+		setAtendentes(aService.buscarTodos());
+		setServicos(sService.buscarTodos());
+		limpar();
+	}
+	
 	public StreamedContent getFoto() {
         FacesContext context = FacesContext.getCurrentInstance();
 
         if (context.getRenderResponse()) {
-            // So, we're rendering the view. Return a stub StreamedContent so that it will generate right URL.
             return new DefaultStreamedContent();
         }
         else {
-            // So, browser is requesting the image. Get ID value from actual request param.
             String id = context.getExternalContext().getRequestParameterMap().get("id");
 			
 			try {
@@ -157,5 +182,21 @@ public class AtendimentoBean implements Serializable {
 
 	public List<Atendimento> getAtendimentos() {
 		return atendimentos;
+	}
+
+	public Cliente getFiltroCliente() {
+		return filtroCliente;
+	}
+
+	public void setFiltroCliente(Cliente filtroCliente) {
+		this.filtroCliente = filtroCliente;
+	}
+
+	public Atendente getFiltroAtendente() {
+		return filtroAtendente;
+	}
+
+	public void setFiltroAtendente(Atendente filtroAtendente) {
+		this.filtroAtendente = filtroAtendente;
 	}
 }

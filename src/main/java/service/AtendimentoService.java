@@ -7,6 +7,7 @@ import java.util.List;
 import org.joda.time.DateTime;
 
 import modelo.Atendimento;
+import modelo.Cliente;
 import util.NegocioException;
 
 public class AtendimentoService {
@@ -50,13 +51,20 @@ public class AtendimentoService {
         return aDAO.remover(entidade.getCodigo());
     }
     
-    public List<Atendimento> buscarTodos(){
+    public List<Atendimento> buscarTodos() {
         return aDAO.buscarTodos();
+    }
+    
+    public List<Atendimento> buscarPorCliente(Cliente entidade) throws NegocioException {
+    	if((entidade == null) || (entidade.getCodigo() == null) || (entidade.getCodigo() < 0))
+    		throw new NegocioException("Registro inválido.");
+    	
+    	return aDAO.buscarPorCliente(entidade);
     }
     
     public boolean isDataAtendimentoValida(Atendimento at) {
     	
-    	List<Atendimento> atendimentos = aDAO.buscarAtendimentosPorAtendente(at.getAtendente());
+    	List<Atendimento> atendimentos = aDAO.buscarPorAtendente(at.getAtendente());
     	DateTime inicioNovo = new DateTime(at.getData());
     	DateTime fimNovo = inicioNovo.plusMinutes(at.getServico().getDuracao());
     	

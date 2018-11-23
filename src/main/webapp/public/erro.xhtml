@@ -10,6 +10,7 @@ xmlns:p="http://primefaces.org/ui">
 <h:head>
 	<title>Erro</title>
 	<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" />
+	<link rel="shortcut icon" href="#{resource['images/favicon.ico']}" type="image/x-icon" />
 	<h:outputStylesheet library="css" name="bootstrap.min.css" />
 	<h:outputStylesheet library="css" name="style.css" />
 </h:head>
@@ -21,12 +22,24 @@ xmlns:p="http://primefaces.org/ui">
 			Dashboard
 		</h:link>
 		<div class="col-sm-3 col-md-4 mr-0 d-flex flex-column flex-md-row">
-			<h:link outcome="/vendas/nova_venda" styleClass="nav-link nav-middle" rendered="#{seguranca.admin or seguranca.atendente}">
-				<i class="fa fa-fw fa-credit-card" aria-hidden="true"></i><br />Nova Venda</h:link>
-			<h:link outcome="/atendimentos/novo_atendimento" styleClass="nav-link nav-middle" rendered="#{seguranca.admin or seguranca.atendente}">
-				<i class="fa fa-fw fa-calendar" aria-hidden="true"></i><br />Novo Atendimento</h:link>
-			<h:link outcome="/produtos/entrada_produtos" styleClass="nav-link nav-middle" rendered="#{seguranca.admin}">
-			 	<i class="fa fa-fw fa-inbox"></i><br />Entrada de Produtos</h:link>
+			<h:link outcome="/vendas/nova_venda"
+					styleClass="nav-link nav-middle"
+					rendered="#{seguranca.admin or seguranca.atendente}">
+					<i class="fa fa-fw fa-credit-card" aria-hidden="true"></i><br />
+					Nova Venda
+			</h:link>
+			<h:link outcome="/atendimentos/novo_atendimento"
+					styleClass="nav-link nav-middle"
+					rendered="#{seguranca.admin or seguranca.atendente}">
+					<i class="fa fa-fw fa-calendar" aria-hidden="true"></i><br />
+					Novo Atendimento
+			</h:link>
+			<h:link outcome="/produtos/entrada_produtos"
+					styleClass="nav-link nav-middle"
+					rendered="#{seguranca.admin}">
+			 		<i class="fa fa-fw fa-inbox"></i><br />
+			 		Entrada de Produtos
+			 </h:link>
 		</div>
 		<ul class="navbar-nav px-5 align-items-center">
 			<li class="nav-item text-nowrap"> #{seguranca.nomeUsuario}<br/>
@@ -34,68 +47,84 @@ xmlns:p="http://primefaces.org/ui">
 					<i class="fa fa-fw fa-power-off"></i>Sign out
 				</h:outputLink>
 			</li>
-      </ul>
+      	</ul>
     </nav>
     
     <h:panelGroup rendered="#{seguranca.admin or seguranca.atendente}">
-    <div class="container-fluid">
-		<div class="row">
-			<nav class="col-md-2 d-none d-md-block sidebar">
-				<div class="sidebar-sticky">
-					<ul class="nav flex-column">
-						<h:panelGroup rendered="#{seguranca.admin or seguranca.atendente}">
-							<li class="#{view.viewId eq '/public/dashboard.xhtml' ? 'nav-item active' : 'nav-item'}">
-								<h:link outcome="/public/dashboard" styleClass="nav-link">
-									<i class="fa fa-fw fa-home" aria-hidden="true"></i> Dashboard</h:link>
-		         			</li>
-	         			</h:panelGroup>
-	         			<h:panelGroup rendered="#{seguranca.admin or seguranca.atendente}">
-		         			<li class="#{view.viewId eq '/vendas/vendas.xhtml' ? 'nav-item active' : 'nav-item'}">
-		         				<h:link outcome="/vendas/vendas" styleClass="nav-link">
-									<i class="fa fa-fw fa-shopping-cart" aria-hidden="true"></i> Vendas</h:link>
-		         			</li>
-	         			</h:panelGroup>
-	         			<h:panelGroup rendered="#{seguranca.admin or seguranca.atendente}">
-	         			<li class="#{view.viewId eq '/atendimentos/atendimentos.xhtml' ? 'nav-item active' : 'nav-item'}">
-	         				<h:link outcome="/atendimentos/atendimentos" styleClass="nav-link">
-								<i class="fa fa-fw fa-calendar" aria-hidden="true"></i> Atendimentos</h:link>
-	         			</li>
-	         			</h:panelGroup>
-	         			<h:panelGroup rendered="#{seguranca.admin}">
-	         			<li class="#{view.viewId eq '/produtos/produtos.xhtml' ? 'nav-item active' : 'nav-item'}">
-	         				<h:link outcome="/produtos/produtos" styleClass="nav-link">
-								<i class="fa fa-fw fa-cube" aria-hidden="true"></i> Produtos</h:link>
-	         			</li>
-	         			</h:panelGroup>
-	         			<h:panelGroup rendered="#{seguranca.admin}">
-	         			<li class="#{view.viewId eq '/marcas/marcas.xhtml' ? 'nav-item active' : 'nav-item'}">
-	         				<h:link outcome="/marcas/marcas" styleClass="nav-link">
-								<i class="fa fa-fw fa-ticket" aria-hidden="true"></i> Marcas</h:link>
-	         			</li>
-	         			</h:panelGroup>
-	         			<h:panelGroup rendered="#{seguranca.admin or seguranca.atendente}">
-						<li class="#{view.viewId eq '/clientes/clientes.xhtml' ? 'nav-item active' : 'nav-item'}">
-							<h:link outcome="/clientes/clientes" styleClass="nav-link">
-								<i class="fa fa-fw fa-users" aria-hidden="true"></i> Clientes</h:link>
-	         			</li>
-	         			</h:panelGroup>
-	         			<h:panelGroup rendered="#{seguranca.admin}">
-	         			<li class="#{view.viewId eq '/usuarios/usuarios.xhtml' ? 'nav-item active' : 'nav-item'}">
-							<h:link outcome="/usuarios/usuarios" styleClass="nav-link">
-								<i class="fa fa-fw fa-user" aria-hidden="true"></i> Usuários</h:link>
-	         			</li>
-	         			</h:panelGroup>
-	         			<h:panelGroup rendered="#{seguranca.admin}">
-						<li class="#{view.viewId eq '/servicos/servicos.xhtml' ? 'nav-item active' : 'nav-item'}">
-							<h:link outcome="/servicos/servicos" styleClass="nav-link">
-								<i class="fa fa-fw fa-file-text" aria-hidden="true"></i> Serviços</h:link>
-	         			</li>
-	         			</h:panelGroup>
-	       			</ul>
-	     		</div>
-	   		</nav>
+	    <div class="container-fluid">
+			<div class="row">
+				<nav class="col-md-2 d-none d-md-block sidebar">
+					<div class="sidebar-sticky">
+						<ul class="nav flex-column">
+							<h:panelGroup rendered="#{seguranca.admin or seguranca.atendente}">
+								<li class="#{view.viewId eq '/public/dashboard.xhtml' ? 'nav-item active' : 'nav-item'}">
+									<h:link outcome="/public/dashboard" styleClass="nav-link">
+										<i class="fa fa-fw fa-home" aria-hidden="true"></i>
+										Dashboard
+									</h:link>
+			         			</li>
+		         			</h:panelGroup>
+		         			<h:panelGroup rendered="#{seguranca.admin or seguranca.atendente}">
+			         			<li class="#{view.viewId eq '/vendas/vendas.xhtml' ? 'nav-item active' : 'nav-item'}">
+			         				<h:link outcome="/vendas/vendas" styleClass="nav-link">
+										<i class="fa fa-fw fa-shopping-cart" aria-hidden="true"></i>
+										Vendas
+									</h:link>
+			         			</li>
+		         			</h:panelGroup>
+		         			<h:panelGroup rendered="#{seguranca.admin or seguranca.atendente}">
+			         			<li class="#{view.viewId eq '/atendimentos/atendimentos.xhtml' ? 'nav-item active' : 'nav-item'}">
+			         				<h:link outcome="/atendimentos/atendimentos" styleClass="nav-link">
+										<i class="fa fa-fw fa-calendar" aria-hidden="true"></i>
+										Atendimentos
+									</h:link>
+			         			</li>
+		         			</h:panelGroup>
+		         			<h:panelGroup rendered="#{seguranca.admin}">
+			         			<li class="#{view.viewId eq '/produtos/produtos.xhtml' ? 'nav-item active' : 'nav-item'}">
+			         				<h:link outcome="/produtos/produtos" styleClass="nav-link">
+										<i class="fa fa-fw fa-cube" aria-hidden="true"></i>
+										Produtos
+									</h:link>
+			         			</li>
+		         			</h:panelGroup>
+		         			<h:panelGroup rendered="#{seguranca.admin}">
+			         			<li class="#{view.viewId eq '/marcas/marcas.xhtml' ? 'nav-item active' : 'nav-item'}">
+			         				<h:link outcome="/marcas/marcas" styleClass="nav-link">
+										<i class="fa fa-fw fa-ticket" aria-hidden="true"></i>
+										Marcas
+									</h:link>
+			         			</li>
+		         			</h:panelGroup>
+		         			<h:panelGroup rendered="#{seguranca.admin or seguranca.atendente}">
+								<li class="#{view.viewId eq '/clientes/clientes.xhtml' ? 'nav-item active' : 'nav-item'}">
+									<h:link outcome="/clientes/clientes" styleClass="nav-link">
+										<i class="fa fa-fw fa-users" aria-hidden="true"></i>
+										Clientes
+									</h:link>
+			         			</li>
+		         			</h:panelGroup>
+		         			<h:panelGroup rendered="#{seguranca.admin}">
+			         			<li class="#{view.viewId eq '/usuarios/usuarios.xhtml' ? 'nav-item active' : 'nav-item'}">
+									<h:link outcome="/usuarios/usuarios" styleClass="nav-link">
+										<i class="fa fa-fw fa-user" aria-hidden="true"></i>
+										Usuários
+										</h:link>
+			         			</li>
+		         			</h:panelGroup>
+		         			<h:panelGroup rendered="#{seguranca.admin}">
+								<li class="#{view.viewId eq '/servicos/servicos.xhtml' ? 'nav-item active' : 'nav-item'}">
+									<h:link outcome="/servicos/servicos" styleClass="nav-link">
+										<i class="fa fa-fw fa-file-text" aria-hidden="true"></i>
+										Serviços
+									</h:link>
+			         			</li>
+		         			</h:panelGroup>
+		       			</ul>
+		     		</div>
+		   		</nav>
+			</div>
 		</div>
-	</div>
 	</h:panelGroup>
 	
 	<main role="main">

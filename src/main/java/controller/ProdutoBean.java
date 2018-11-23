@@ -112,6 +112,7 @@ public class ProdutoBean implements Serializable {
 	public void preRender(ComponentSystemEvent e) {
 		setProdutos(service.buscarTodos());
 		setMarcas(mService.buscarTodos());
+		attributes = new ArrayList<String>();
 		image = null;
 	}
 

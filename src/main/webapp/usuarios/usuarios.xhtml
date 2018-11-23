@@ -40,35 +40,39 @@
 						 id="tbUsuarios"
 						 emptyMessage="Não existem registros cadastrados.">
 				
-				<p:column headerText="Código" width="7%" style="text-align: center !important;">
+				<p:column filterBy="#{obj.codigo}" headerText="Código" filterMatchMode="contains"
+						  width="7%" style="text-align: center !important;">
 					<h:outputText value="#{obj.codigo}" />
 				</p:column>
 				
-				<p:column headerText="Nome">
+				<p:column id="outNome" filterBy="#{obj.nome}" headerText="Nome" filterMatchMode="contains" width="30%">
 					<h:outputText value="#{obj.nome}" />
+					<p:watermark for="@(#frm\\:tbUsuarios\\:outNome:filter)" value="Filtrar por nome"/>
 				</p:column>
 				
-				<p:column headerText="Email">
+				<p:column filterBy="#{obj.email}" headerText="Email" filterMatchMode="contains">
 					<h:outputText value="#{obj.email}" />
 				</p:column>
 				
-				<p:column headerText="Login" width="20%">
+				<p:column filterBy="#{obj.login}" headerText="Login" width="20%" filterMatchMode="contains">
 					<h:outputText value="#{obj.login}" />
 				</p:column>
 				
-				<p:column headerText="Dt. Nascimento"  width="20%">
-					<h:outputText value="#{obj.dataNascimento}" />
+				<p:column headerText="Data de Nascimento"  width="10%">
+					<h:outputText value="#{obj.dataNascimento}">
+						<f:convertDateTime pattern="MM/dd/yyyy" />
+					</h:outputText>
 				</p:column>
 				
 				<f:facet name="footer">
 	                <p:commandButton icon="ui-icon-pencil"
-                                 	 value="Editar"
+                                 	 value="Editar" styleClass="tableBtn"
                                  	 action="#{usuario.editar}"
                                  	 update="frm" process="frm" />
 					<p:commandButton icon="ui-icon-trash"
 									 process="tbUsuarios"
                                      value="Excluir"
-                                     update="frm"
+                                     update="frm" styleClass="tableBtn"
                                      oncomplete="PF('confirmacao').show(); return false;"/>
 				</f:facet>
 				
